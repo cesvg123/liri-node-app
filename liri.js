@@ -4,7 +4,7 @@ let figlet = require("figlet");
 let request = require("request");
 let keys = require("./key.js");
 let spotify = require("node-spotify-api");
-let Spotify = new spotify(keys.spotifys);
+let Spotify = new spotify(keys.spotify);
 let chalk = require("chalk");
 let command = process.argv[2];
 let parameter = process.argv[3];
@@ -28,13 +28,13 @@ function switchCase() {
             break;
 
         default:
-            display(Invalid);
+            display('Invalid');
             break;
     }
 };
 
 function bandInTown(parameter) {
-    if (concert - this) {
+    if (parameter == 'concert-this') {
         var artist = "";
         for (var i = 3; i < process.argv.length; i++) {
             artist += process.argv[i];
@@ -51,22 +51,22 @@ function bandInTown(parameter) {
     } else {
         artist = parameter;
     }
-    var queryURL = `"https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"`;
+    var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
     request(queryURL, function (error, response, body) {
         if (!error && response.statusCode === 200) {
-            var JSON = JSON.parse(body);
-            for (i = 0; i < JSON.length; i++) {
-                var date = JSON[i].datetime;
+            var JS = JSON.parse(body);
+            for (i = 0; i < JS.length; i++) {
+                var date = JS[i].datetime;
                 var month = date.substring(5, 7);
                 var year = date.substring(0, 4);
-                var day = date.subsctring(8, 10);
+                var day = date.substring(8, 10);
                 var completeDate = month + "/" + day + "/" + year
 
-                display(clalk.blue("\n--------------------\n"));
-                display(clalk.green("Name: " + JSON[i].venue.name));
-                display(clalk.green("City: " + JSON[i].venue.city));
-                display(clalk.green("Date: " + JSON[i].venue.completeDate));
-                display(clalk.blue("\n--------------------\n"));
+                display(chalk.blue("\n--------------------\n"));
+                display(chalk.green("Name: " + JS[i].venue.name));
+                display(chalk.green("City: " + JS[i].venue.city));
+                display(chalk.green("Date: " + completeDate));
+                display(chalk.blue("\n--------------------\n"));
             }
 
         }
@@ -91,7 +91,7 @@ function spotifySong(parameter) {
             console.dir(err);
             return;
         }
-        console.log(clalk.green(data));
+        console.log(chalk.green(data));
     });
     Spotify.search({
         type: 'track',
@@ -101,11 +101,11 @@ function spotifySong(parameter) {
             display('error:' + error);
             return;
         } else {
-            display(clalk.blue("\n--------------------\n"));
-            display(clalk.green("Artist: " + data.tracks.items[0].artists[0].name));
-            display(clalk.green("Song: " + data.tracks.items[0].name));
-            display(clalk.green("Album: " + data.tracks.items[0].album.name));
-            display(clalk.blue("\n--------------------\n"));
+            display(chalk.blue("\n--------------------\n"));
+            display(chalk.green("Artist: " + data.tracks.items[0].artists[0].name));
+            display(chalk.green("Song: " + data.tracks.items[0].name));
+            display(chalk.green("Album: " + data.tracks.items[0].album.name));
+            display(chalk.blue("\n--------------------\n"));
         }
     });
 
@@ -119,25 +119,25 @@ function omdbInfo(parameter) {
         findMovie = parameter;
     };
 
-    let omdbInfo = "OMDB"
+    let omdbFig = "OMDB"
     figlet(omdbFig, function (err, data) {
         if (err) {
             console.log("something is wrong!!!");
             console.dir(err);
             return;
         }
-        console.log(clalk.green(data));
+        console.log(chalk.green(data));
     });
 
-    var queryURL = `"http://www.omdbapi.com/?t=" + findMovie + "&y=&plot=short&apikey=trilogy"`;
+    var queryURL = "http://www.omdbapi.com/?t=" + findMovie + "&y=&plot=short&apikey=trilogy";
     request(queryURL, function (err, res, body) {
         var omdbInf = JSON.parse(body);
         if (!err && res.statusCode === 200) {
-            display(clalk.blue("\n--------------------\n"));
-            display(clalk.green("Title: " + omdbInf.Title));
-            display(clalk.green("Release Year: " + omdbInf.Year));
-            display(clalk.green("IMDB Rating: " + omdbInf.imdbRating));
-            display(clalk.blue("\n--------------------\n"));
+            display(chalk.blue("\n--------------------\n"));
+            display(chalk.green("Title: " + omdbInf.Title));
+            display(chalk.green("Release Year: " + omdbInf.Year));
+            display(chalk.green("IMDB Rating: " + omdbInf.imdbRating));
+            display(chalk.blue("\n--------------------\n"));
         }
     });
 };

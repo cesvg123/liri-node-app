@@ -51,7 +51,7 @@ function bandInTown(parameter) {
     } else {
         artist = parameter;
     }
-    var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+    var queryURL = `"https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"`;
     request(queryURL, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             var JSON = JSON.parse(body);
@@ -129,7 +129,7 @@ function omdbInfo(parameter) {
         console.log(clalk.green(data));
     });
 
-    var queryURL = "http://www.omdbapi.com/?t=" + findMovie + "&y=&plot=short&apikey=trilogy";
+    var queryURL = `"http://www.omdbapi.com/?t=" + findMovie + "&y=&plot=short&apikey=trilogy"`;
     request(queryURL, function (err, res, body) {
         var omdbInf = JSON.parse(body);
         if (!err && res.statusCode === 200) {

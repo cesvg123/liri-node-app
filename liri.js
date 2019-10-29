@@ -143,7 +143,7 @@ function omdbInfo(parameter) {
 };
 
 function getRandom() {
-    fs.readFile('random.txt', 'utf8', function (err, data) {
+    fs.readFile('random.txt', 'utf8', function (error, data) {
         if (error) {
             return display(error);
         }
